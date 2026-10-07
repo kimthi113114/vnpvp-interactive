@@ -1,72 +1,66 @@
 # VNPVP Interactive Corporation ⚡
 
-> **Official Portal & Open-Source Developer Tools Ecosystem**  
-> *501(c)(3) Non-Profit Technology Foundation*
+> **Trang Giới Thiệu Chính Thức — Tổ Chức Công Nghệ Phi Lợi Nhuận (Startup / Pre-Release)**  
+> Sáng lập bởi [@kimthi113114](https://github.com/kimthi113114)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Zero Telemetry](https://img.shields.io/badge/Telemetry-0%20Bytes-success.svg)](#privacy-charter)
-[![Non-Profit Foundation](https://img.shields.io/badge/Status-501(c)(3)%20Non--Profit-purple.svg)](#mission)
-[![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-cyan.svg)](https://kimthi113114.github.io/vnpvp-interactive/)
+[![Giai đoạn](https://img.shields.io/badge/Trạng%20Thái-Startup%20%E2%80%A2%20Pre--Release-amber.svg)](https://kimthi113114.github.io/vnpvp-interactive/)
+[![Tổ chức](https://img.shields.io/badge/Mô%20Hình-Phi%20Lợi%20Nhuận%20(Non--Profit)-purple.svg)](#sứ-mệnh)
+[![Bản quyền](https://img.shields.io/badge/Bản%20Quyền-MIT%20License-blue.svg)](LICENSE)
+[![Website tĩnh](https://img.shields.io/badge/Live%20Website-GitHub%20Pages-cyan.svg)](https://kimthi113114.github.io/vnpvp-interactive/)
 
----
-
-## 🌟 Overview
-
-**VNPVP Interactive Corporation** is a non-profit technology foundation dedicated to crafting lightning-fast, zero-telemetry, developer-first command-line engines, local API mockers, and static analyzers.
-
-We believe that world-class developer tools should belong to the global commons—forever free, air-gapped, and independent from venture capital monetization pressure.
+🌐 **Xem trang web trực tiếp tại:** [https://kimthi113114.github.io/vnpvp-interactive/](https://kimthi113114.github.io/vnpvp-interactive/)
 
 ---
 
-## 🚀 Flagship Toolchain
+## 🌟 Giới Thiệu Chung
 
-- **`ForgeCLI`**: Ultra-fast multi-language project scaffolder and monorepo build runner (Rust core).
-- **`MockEdge`**: Zero-latency local mock server with dynamic latency jitter and OpenAPI 3.1 contract validation.
-- **`PulseAST`**: Real-time cognitive code complexity auditor and architecture drift detector.
-- **`SchemaSync`**: Cross-dialect database schema diffing and type synchronization engine.
-- **`TraceLens`**: Local-first distributed tracing & gRPC/REST packet debugger.
-- **`HexagonDB`**: In-memory embedded zero-config test database for lightning-fast test execution.
+**VNPVP Interactive Corporation** là tổ chức công nghệ phi lợi nhuận mới thành lập (Startup Non-Profit). Chúng tôi tập trung nghiên cứu, thiết kế và xây dựng các bộ công cụ phát triển phần mềm (Developer Tools) thế hệ mới:
+- Siêu tốc độ và tối ưu tài nguyên (Rust / Go / TypeScript).
+- Bảo mật và riêng tư tuyệt đối, **Zero Telemetry** (không thu thập dữ liệu người dùng).
+- Mãi mãi miễn phí và mã nguồn mở theo giấy phép MIT.
 
----
-
-## 🛠️ Live In-Browser Playground
-
-The official landing page features live, client-side, zero-telemetry developer utilities running directly in your browser:
-1. **JSON to TypeScript Generator**: Converts complex nested JSON schemas into strongly typed TypeScript interfaces in real-time.
-2. **JWT Inspector**: Inspect and validate JSON Web Token headers, payload claims, and expiration dates.
-3. **Cryptographic Hash & UUIDv4 Generator**: Generates RFC4122 compliant UUIDs and WebCrypto SHA-256 hashes with one-click copy.
-4. **RegEx Matcher & Highlighter**: Interactive regular expression tester with syntax match coloring.
+Hiện tại dự án **đang trong quá trình nghiên cứu, xây dựng kiến trúc cốt lõi (Pre-Release Phase)** và đang chuẩn bị cho đợt phát hành phiên bản thử nghiệm (Public Alpha) đầu tiên.
 
 ---
 
-## ⚡ Quick Start
+## 🚀 Các Công Cụ Đang Phát Triển (Pipeline)
 
-```bash
-# Clone the repository
-git clone https://github.com/kimthi113114/vnpvp-interactive.git
-
-# Navigate to the folder
-cd vnpvp-interactive
-
-# Open the website directly (Pure static, zero build step required)
-# Or serve with any static server:
-npx serve .
-# or python -m http.server 8080
-```
+| Dự án | Ngôn ngữ / Công nghệ | Mô tả | Giai đoạn hiện tại |
+| :--- | :--- | :--- | :--- |
+| **ForgeCLI** | Rust | Trình khởi tạo dự án và điều phối build monorepo siêu tốc | Đang hoàn thiện Core Parser (Pre-Alpha) |
+| **MockEdge** | TypeScript / Go | Máy chủ giả lập API Mock Server cục bộ độ trễ 0ms, OpenAPI 3.1 | Đang hoàn thiện tài liệu đặc tả (RFC Draft) |
+| **PulseAST** | TypeScript / Rust | Bộ phân tích cú pháp tĩnh đo lường Cognitive Complexity và phụ thuộc vòng | Đang thử nghiệm cây cú pháp (Prototype) |
 
 ---
 
-## 📜 Non-Profit Charter
+## 🛠️ Demo Prototype Sẵn Có Trên Trang Web
 
-1. **Zero Paywalls**: All tools are released under permissive MIT / Apache 2.0 licenses.
-2. **Zero Telemetry**: We collect exactly 0 bytes of usage data. No beacons, no analytics pings.
-3. **Community Governance**: Open RFC roadmap governed by community consensus.
-4. **100% Reinvestment**: All sponsorship donations are distributed directly to open-source maintainers and free CDN infrastructure.
+Trang web tĩnh đã tích hợp sẵn 4 tiện ích prototype hoạt động 100% offline ngay trên trình duyệt (client-side) để bạn trải nghiệm:
+1. **JSON to TypeScript Interface Converter**: Tự động suy luận kiểu dữ liệu từ JSON sang TypeScript.
+2. **JWT Inspector**: Phân tích header, payload claims và thời gian hết hạn của token JWT.
+3. **Cryptographic UUIDv4 & SHA-256 Generator**: Sinh mã định danh và mã băm bằng WebCrypto an toàn.
+4. **RegEx Matcher & Highlighter**: Kiểm thử biểu thức chính quy trực quan theo thời gian thực.
 
 ---
 
-## 📄 License
+## 📅 Lộ Trình Phát Hành (Roadmap)
 
-Distributed under the **MIT License**. See `LICENSE` for details.
+- [x] **Q2 - Q3 2026**: Thành lập tổ chức phi lợi nhuận VNPVP Interactive Corporation & thiết kế kiến trúc kỹ thuật.
+- [x] **Q3 - Q4 2026**: Hoàn thiện bộ khung CLI, các thuật toán prototype và trang web giới thiệu.
+- [ ] **Q4 2026**: Mở đăng ký thử nghiệm nội bộ (Private Alpha).
+- [ ] **Q1 2027**: Phát hành phiên bản công khai rộng rãi đầu tiên (v1.0 Public Release).
 
-© 2026 VNPVP Interactive Corporation. Built for developers worldwide.
+---
+
+## 👨‍💻 Tác Giả & Ban Sáng Lập
+
+- Sáng lập & Điều hành: **[@kimthi113114](https://github.com/kimthi113114)**
+- Tổ chức: **VNPVP Interactive Corporation**
+- Liên hệ & Đóng góp: [contact@vnpvp.org](mailto:contact@vnpvp.org)
+
+---
+
+## 📄 Bản Quyền
+
+Dự án phát hành dưới giấy phép mã nguồn mở tự do [MIT License](LICENSE).
+Mọi cá nhân, tổ chức hay doanh nghiệp đều có thể tự do sử dụng và đóng góp.
