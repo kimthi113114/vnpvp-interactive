@@ -1,66 +1,75 @@
 # VNPVP Interactive Corporation ⚡
 
-> **Trang Giới Thiệu Chính Thức — Tổ Chức Công Nghệ Phi Lợi Nhuận (Startup / Pre-Release)**  
-> Sáng lập bởi [@kimthi113114](https://github.com/kimthi113114)
+> **Official Portal & Developer Infrastructure Platform**  
+> *Early-Stage Technology Startup (Founded 2026)*  
+> Founded by [@kimthi113114](https://github.com/kimthi113114)
 
-[![Giai đoạn](https://img.shields.io/badge/Trạng%20Thái-Startup%20%E2%80%A2%20Pre--Release-amber.svg)](https://kimthi113114.github.io/vnpvp-interactive/)
-[![Tổ chức](https://img.shields.io/badge/Mô%20Hình-Phi%20Lợi%20Nhuận%20(Non--Profit)-purple.svg)](#sứ-mệnh)
-[![Bản quyền](https://img.shields.io/badge/Bản%20Quyền-MIT%20License-blue.svg)](LICENSE)
-[![Website tĩnh](https://img.shields.io/badge/Live%20Website-GitHub%20Pages-cyan.svg)](https://kimthi113114.github.io/vnpvp-interactive/)
+[![Startup Status](https://img.shields.io/badge/Status-Early--Stage%20Startup%20(Est.%202026)-amber.svg)](https://kimthi113114.github.io/vnpvp-interactive/)
+[![Claude Startups](https://img.shields.io/badge/Ecosystem-Claude%20Startups%20Candidate-indigo.svg)](https://kimthi113114.github.io/vnpvp-interactive/#claude)
+[![License](https://img.shields.io/badge/License-MIT%20Open--Core-blue.svg)](LICENSE)
+[![Website](https://img.shields.io/badge/Live%20Website-GitHub%20Pages-cyan.svg)](https://kimthi113114.github.io/vnpvp-interactive/)
 
-🌐 **Xem trang web trực tiếp tại:** [https://kimthi113114.github.io/vnpvp-interactive/](https://kimthi113114.github.io/vnpvp-interactive/)
-
----
-
-## 🌟 Giới Thiệu Chung
-
-**VNPVP Interactive Corporation** là tổ chức công nghệ phi lợi nhuận mới thành lập (Startup Non-Profit). Chúng tôi tập trung nghiên cứu, thiết kế và xây dựng các bộ công cụ phát triển phần mềm (Developer Tools) thế hệ mới:
-- Siêu tốc độ và tối ưu tài nguyên (Rust / Go / TypeScript).
-- Bảo mật và riêng tư tuyệt đối, **Zero Telemetry** (không thu thập dữ liệu người dùng).
-- Mãi mãi miễn phí và mã nguồn mở theo giấy phép MIT.
-
-Hiện tại dự án **đang trong quá trình nghiên cứu, xây dựng kiến trúc cốt lõi (Pre-Release Phase)** và đang chuẩn bị cho đợt phát hành phiên bản thử nghiệm (Public Alpha) đầu tiên.
+🌐 **Live Website:** [https://kimthi113114.github.io/vnpvp-interactive/](https://kimthi113114.github.io/vnpvp-interactive/)
 
 ---
 
-## 🚀 Các Công Cụ Đang Phát Triển (Pipeline)
+## 🌟 Executive Summary
 
-| Dự án | Ngôn ngữ / Công nghệ | Mô tả | Giai đoạn hiện tại |
-| :--- | :--- | :--- | :--- |
-| **ForgeCLI** | Rust | Trình khởi tạo dự án và điều phối build monorepo siêu tốc | Đang hoàn thiện Core Parser (Pre-Alpha) |
-| **MockEdge** | TypeScript / Go | Máy chủ giả lập API Mock Server cục bộ độ trễ 0ms, OpenAPI 3.1 | Đang hoàn thiện tài liệu đặc tả (RFC Draft) |
-| **PulseAST** | TypeScript / Rust | Bộ phân tích cú pháp tĩnh đo lường Cognitive Complexity và phụ thuộc vòng | Đang thử nghiệm cây cú pháp (Prototype) |
+**VNPVP Interactive Corporation** is an early-stage technology startup founded in **2026**. We engineer high-performance developer tools, zero-telemetry command-line compilers, local API simulation engines, and intelligent developer agent workflows powered by **Anthropic Claude** and the **Model Context Protocol (MCP)**.
 
 ---
 
-## 🛠️ Demo Prototype Sẵn Có Trên Trang Web
+## 🏢 Corporate Verification & Profile
 
-Trang web tĩnh đã tích hợp sẵn 4 tiện ích prototype hoạt động 100% offline ngay trên trình duyệt (client-side) để bạn trải nghiệm:
-1. **JSON to TypeScript Interface Converter**: Tự động suy luận kiểu dữ liệu từ JSON sang TypeScript.
-2. **JWT Inspector**: Phân tích header, payload claims và thời gian hết hạn của token JWT.
-3. **Cryptographic UUIDv4 & SHA-256 Generator**: Sinh mã định danh và mã băm bằng WebCrypto an toàn.
-4. **RegEx Matcher & Highlighter**: Kiểm thử biểu thức chính quy trực quan theo thời gian thực.
-
----
-
-## 📅 Lộ Trình Phát Hành (Roadmap)
-
-- [x] **Q2 - Q3 2026**: Thành lập tổ chức phi lợi nhuận VNPVP Interactive Corporation & thiết kế kiến trúc kỹ thuật.
-- [x] **Q3 - Q4 2026**: Hoàn thiện bộ khung CLI, các thuật toán prototype và trang web giới thiệu.
-- [ ] **Q4 2026**: Mở đăng ký thử nghiệm nội bộ (Private Alpha).
-- [ ] **Q1 2027**: Phát hành phiên bản công khai rộng rãi đầu tiên (v1.0 Public Release).
+| Field | Official Value |
+| :--- | :--- |
+| **Legal Entity** | **VNPVP Interactive Corporation** |
+| **Founded Year** | **2026** (Year 1, eligible for Claude Startups &lt; 5 years window) |
+| **Stage** | Pre-Release / Architecture & Prototype Incubation |
+| **Company Website** | [https://kimthi113114.github.io/vnpvp-interactive/](https://kimthi113114.github.io/vnpvp-interactive/) |
+| **Official Work Email** | [contact@vnpvp.org](mailto:contact@vnpvp.org) |
+| **Founder & Lead Architect** | [@kimthi113114](https://github.com/kimthi113114) |
+| **Business Model** | Open-Core developer utilities with enterprise scale & AI infrastructure |
 
 ---
 
-## 👨‍💻 Tác Giả & Ban Sáng Lập
+## 🤖 Claude Startups & Anthropic Ecosystem Alignment
 
-- Sáng lập & Điều hành: **[@kimthi113114](https://github.com/kimthi113114)**
-- Tổ chức: **VNPVP Interactive Corporation**
-- Liên hệ & Đóng góp: [contact@vnpvp.org](mailto:contact@vnpvp.org)
+We are actively applying to the **Claude Startups program** to build:
+1. **Native Claude Model Context Protocol (MCP) Server**: Exposing AST complexity, circular dependency maps, and semantic code diagnostics directly to Claude 3.5 Sonnet.
+2. **Zero-Latency API Simulation**: Orchestrating dynamic edge API mocking and contract testing with Claude reasoning agents.
+3. **Local-First & Privacy-Sovereign Architecture**: Providing air-gapped developer workflows where proprietary code never leaves local workstations.
 
 ---
 
-## 📄 Bản Quyền
+## 🚀 Active Products in Development (Pipeline)
 
-Dự án phát hành dưới giấy phép mã nguồn mở tự do [MIT License](LICENSE).
-Mọi cá nhân, tổ chức hay doanh nghiệp đều có thể tự do sử dụng và đóng góp.
+- **`ForgeCLI`** *(Rust)*: Ultra-fast project scaffolding and monorepo DAG build runner.
+- **`MockEdge`** *(TypeScript / Go)*: Zero-latency local API mock server with OpenAPI 3.1 contract validation and MCP agent support.
+- **`PulseAST`** *(Rust / TypeScript)*: Real-time static code complexity auditor and architecture drift inspector.
+
+---
+
+## 🛠️ In-Browser Prototype Utilities
+
+Visitors can test functional client-side algorithms directly on our official landing page:
+- **JSON to TypeScript Interface Generator**
+- **JWT Token Inspector & Claims Decoder**
+- **Cryptographic UUIDv4 & SHA-256 Generator**
+- **Interactive RegEx Matcher & Syntax Highlighter**
+
+---
+
+## 📅 Roadmap
+
+- [x] **Q2 - Q3 2026**: Entity incorporation of VNPVP Interactive Corporation & core architecture specifications.
+- [x] **Q3 - Q4 2026**: Core CLI scaffolding, prototype synthesis, and Claude Startups accreditation review.
+- [ ] **Q4 2026**: Private Alpha preview testing for early adopters.
+- [ ] **Q1 2027**: General Availability (GA v1.0) release.
+
+---
+
+## 📄 License
+
+Open-core components are released under the [MIT License](LICENSE).  
+© 2026 VNPVP Interactive Corporation. All rights reserved.

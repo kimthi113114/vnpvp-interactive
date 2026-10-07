@@ -1,4 +1,4 @@
-/* VNPVP Interactive Corporation Custom Styling */
+/* VNPVP Interactive Corporation Custom Styling & Dynamic Animations */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
@@ -46,10 +46,55 @@ body {
   height: 100vh;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.65;
+  opacity: 0.75;
 }
 
-/* Glassmorphism Classes */
+/* ================= ANIMATED BACKGROUND ORBS ================= */
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate(-50%, 0) scale(1); }
+  50% { transform: translate(-45%, -30px) scale(1.12); }
+}
+
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 40px) scale(1.08); }
+}
+
+@keyframes floatOrb3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-40px, -30px) scale(1.15); }
+}
+
+.orb-float-1 {
+  animation: floatOrb1 14s ease-in-out infinite;
+}
+.orb-float-2 {
+  animation: floatOrb2 18s ease-in-out infinite;
+}
+.orb-float-3 {
+  animation: floatOrb3 16s ease-in-out infinite;
+}
+
+/* ================= SCROLL REVEAL ANIMATIONS ================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+
+/* ================= 3D CARD TILT & GLASSMORPHISM ================= */
 .glass-panel {
   background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(16px);
@@ -59,19 +104,20 @@ body {
 
 .glass-card {
   background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .glass-card:hover {
-  border-color: rgba(56, 189, 248, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.15);
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 16px 36px -12px rgba(6, 182, 212, 0.22);
 }
 
-/* Spotlight Card Effect */
+/* Spotlight Card Effect with Dynamic Cursor Coordinates */
 .spotlight-card {
   position: relative;
   overflow: hidden;
@@ -85,35 +131,59 @@ body {
   right: 0;
   bottom: 0;
   background: radial-gradient(
-    600px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
-    rgba(56, 189, 248, 0.12),
-    transparent 40%
+    650px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+    rgba(56, 189, 248, 0.15),
+    transparent 42%
   );
   pointer-events: none;
   transition: opacity 0.5s;
   opacity: 1;
 }
 
-/* Glowing text and gradient headers */
-.text-gradient {
-  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* ================= INFINITE MARQUEE TICKER ================= */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
-.text-gradient-cyan {
-  background: linear-gradient(135deg, #a5f3fc 0%, #06b6d4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
 }
 
-.text-gradient-gold {
-  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.marquee-track:hover {
+  animation-play-state: paused;
 }
 
-/* Animated Glowing Border */
+/* ================= BUTTON SHIMMER LIGHT GLARE ================= */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.75s ease-in-out;
+}
+
+.btn-shimmer:hover::after {
+  transform: translateX(100%);
+}
+
+/* ================= ANIMATED GLOWING ROTATING BORDER ================= */
 .glow-border-box {
   position: relative;
   background: #090d16;
@@ -123,50 +193,53 @@ body {
 .glow-border-box::before {
   content: '';
   position: absolute;
-  inset: -1px;
-  background: linear-gradient(90deg, #06b6d4, #6366f1, #a855f7, #06b6d4);
-  background-size: 300% 100%;
+  inset: -1.5px;
+  background: linear-gradient(90deg, #06b6d4, #6366f1, #a855f7, #f59e0b, #06b6d4);
+  background-size: 400% 100%;
   border-radius: inherit;
   z-index: -1;
-  animation: borderRotate 8s linear infinite;
+  animation: borderRotate 10s linear infinite;
 }
 
 @keyframes borderRotate {
   0% { background-position: 0% 50%; }
-  100% { background-position: 300% 50%; }
+  100% { background-position: 400% 50%; }
 }
 
-/* Terminal Scanline */
-.scanline {
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0),
-    rgba(255,255,255,0) 50%,
-    rgba(0, 0, 0, 0.3) 50%,
-    rgba(0, 0, 0, 0.3)
-  );
-  background-size: 100% 4px;
+/* ================= TYPING CARET CURSOR ================= */
+@keyframes blinkCaret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-/* Grid Background Texture */
+.cursor-caret {
+  display: inline-block;
+  width: 8px;
+  height: 1.1em;
+  background-color: #38bdf8;
+  vertical-align: -2px;
+  margin-left: 2px;
+  animation: blinkCaret 0.9s infinite;
+}
+
+/* ================= RADAR / NOW PULSE WAVE ================= */
+@keyframes radarPing {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+.radar-ping {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(245, 158, 11, 0.5);
+  animation: radarPing 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Grid Pattern Background */
 .bg-grid-pattern {
-  background-size: 40px 40px;
+  background-size: 44px 44px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-}
-
-.bg-radial-fade {
-  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 70%, transparent 100%);
-}
-
-/* Pulse Glow Animation */
-@keyframes softPulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.05); }
-}
-
-.animate-soft-pulse {
-  animation: softPulse 6s ease-in-out infinite;
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
 }
