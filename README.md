@@ -27,7 +27,7 @@
 | **Founded Year** | **2026** (Year 1, eligible for Claude Startups &lt; 5 years window) |
 | **Stage** | Pre-Release / Architecture & Prototype Incubation |
 | **Company Website** | [https://kimthi113114.github.io/vnpvp-interactive/](https://kimthi113114.github.io/vnpvp-interactive/) |
-| **Official Work Email** | [contact@vnpvp.org](mailto:contact@vnpvp.org) |
+| **Official Work Email** | [admin@vnpvp.io.vn](mailto:admin@vnpvp.io.vn) |
 | **Founder & Lead Architect** | [@kimthi113114](https://github.com/kimthi113114) |
 | **Business Model** | Open-Core developer utilities with enterprise scale & AI infrastructure |
 

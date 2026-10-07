@@ -46,11 +46,11 @@ function initTypingTerminal() {
 
   const scenarios = [
     {
-      cmd: "git clone https://github.com/kimthi113114/vnpvp-interactive.git",
+      cmd: "curl -fsSL https://packages.vnpvp.io.vn/install.sh | bash",
       logs: [
         '<span class="text-slate-300">[INFO] VNPVP Interactive Corporation &mdash; Initial Architecture Sprint</span>',
         '<span class="text-amber-300/90">&bull; Stage: Core Parser & AST Synthesis Engine in active implementation</span>',
-        '<span class="text-slate-400">&bull; Non-Profit Charter: 100% Free, Permissive MIT License, Zero Commercial Telemetry</span>',
+        '<span class="text-slate-400">&bull; Commercial Open-Core: Developer tooling + Enterprise Claude MCP integrations</span>',
         '<span class="text-emerald-400">&check; Milestone 1 Complete: System Blueprint & In-Browser Prototype Verified</span>',
         '<span class="text-cyan-300">&gt; Target Release: Q4 2026 Developer Early Access</span>'
       ]
