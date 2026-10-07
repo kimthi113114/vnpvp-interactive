@@ -1,0 +1,9 @@
+# Dependencies
+node_modules/
+
+# Cloudflare Wrangler
+.wrangler/
+
+# OS metadata
+.DS_Store
+Thumbs.db

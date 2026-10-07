@@ -1,0 +1,1089 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VNPVP Interactive Corporation â€” Non-Profit Open-Source Developer Tools</title>
+  <meta name="description" content="VNPVP Interactive Corporation is a non-profit foundation crafting next-generation, high-performance, zero-telemetry developer tools and open-source infrastructure.">
+  <meta name="keywords" content="developer tools, open source, non-profit, CLI, AST analyzer, API mock, TypeScript, software development">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              cyan: '#06b6d4',
+              violet: '#8b5cf6',
+              purple: '#a855f7',
+              dark: '#030712',
+              card: '#0b1120',
+              border: 'rgba(255, 255, 255, 0.08)'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-[#030712] text-slate-100 antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+
+  <!-- Interactive Background Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Background Ambient Glow Accents -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-gradient-to-tr from-cyan-600/15 via-indigo-600/15 to-purple-600/15 blur-[120px] rounded-full animate-soft-pulse"></div>
+    <div class="absolute top-1/3 -left-48 w-[500px] h-[500px] bg-sky-600/10 blur-[130px] rounded-full"></div>
+    <div class="absolute bottom-1/4 -right-48 w-[600px] h-[600px] bg-purple-600/10 blur-[140px] rounded-full"></div>
+  </div>
+
+  <div class="relative z-10 flex flex-col min-h-screen">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-cyan-950/70 via-slate-900/90 to-purple-950/70 border-b border-cyan-500/20 py-2 px-4 text-center text-xs sm:text-sm text-cyan-200 backdrop-blur-md">
+      <span class="inline-flex items-center gap-1.5 font-medium">
+        <span class="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping"></span>
+        <span class="font-bold tracking-wide">VNPVP OPEN CORE 2.0</span> is live! Built with love for the global developer commons.
+        <a href="#playground" class="underline ml-1 hover:text-white font-semibold">Test In Browser &rarr;</a>
+      </span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#030712]/80 border-b border-white/5 transition-all">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        <!-- Brand / Logo -->
+        <a href="#" class="flex items-center gap-3.5 group">
+          <div class="relative w-10 h-10 flex items-center justify-center p-0.5 rounded-xl bg-gradient-to-br from-cyan-500 via-indigo-500 to-purple-600 shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform duration-300">
+            <img src="assets/images/logo.svg" alt="VNPVP Interactive Corporation Logo" class="w-full h-full">
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-lg sm:text-xl tracking-tight text-white group-hover:text-cyan-300 transition-colors">
+                VNPVP <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">Interactive</span>
+              </span>
+              <span class="hidden md:inline-flex px-2 py-0.5 text-[10px] uppercase tracking-wider font-bold rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                Non-Profit
+              </span>
+            </div>
+            <span class="text-[11px] font-mono text-slate-400 -mt-0.5">Open-Source Developer Foundation</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-300">
+          <a href="#mission" class="hover:text-cyan-400 transition-colors">Mission</a>
+          <a href="#tools" class="hover:text-cyan-400 transition-colors">Tools Suite</a>
+          <a href="#playground" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <span>Playground</span>
+            <span class="px-1.5 py-0.2 text-[9px] font-mono font-bold uppercase rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Live</span>
+          </a>
+          <a href="#architecture" class="hover:text-cyan-400 transition-colors">Architecture</a>
+          <a href="#transparency" class="hover:text-cyan-400 transition-colors">Transparency</a>
+          <a href="#faq" class="hover:text-cyan-400 transition-colors">FAQ</a>
+        </nav>
+
+        <!-- CTA & GitHub Button -->
+        <div class="hidden sm:flex items-center gap-3">
+          <a href="https://github.com/kimthi113114" target="_blank" rel="noopener noreferrer" 
+             class="flex items-center gap-2 px-3.5 py-2 text-xs font-mono font-semibold rounded-lg bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 hover:border-cyan-500/40 transition-all shadow-sm">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            <span>GitHub</span>
+            <span class="px-1.5 py-0.5 text-[10px] bg-cyan-500/20 text-cyan-300 rounded font-bold border border-cyan-500/30">â˜… 48.2k</span>
+          </a>
+
+          <a href="#sponsor" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all font-mono">
+            Sponsor / Donate
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-slate-400 hover:text-white focus:outline-none" aria-label="Open navigation menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobile-menu" class="hidden lg:hidden px-4 pt-2 pb-6 bg-slate-900/95 border-b border-white/10 backdrop-blur-2xl transition-all duration-200">
+        <div class="flex flex-col gap-3 text-sm font-medium">
+          <a href="#mission" class="mobile-nav-link py-2 text-slate-300 hover:text-cyan-400">Mission</a>
+          <a href="#tools" class="mobile-nav-link py-2 text-slate-300 hover:text-cyan-400">Tools Suite</a>
+          <a href="#playground" class="mobile-nav-link py-2 text-slate-300 hover:text-cyan-400">Live Playground</a>
+          <a href="#architecture" class="mobile-nav-link py-2 text-slate-300 hover:text-cyan-400">Architecture</a>
+          <a href="#transparency" class="mobile-nav-link py-2 text-slate-300 hover:text-cyan-400">Financial Transparency</a>
+          <a href="#faq" class="mobile-nav-link py-2 text-slate-300 hover:text-cyan-400">FAQ</a>
+          <div class="pt-3 border-t border-white/10 flex flex-col gap-2">
+            <a href="https://github.com/kimthi113114" target="_blank" class="py-2.5 text-center rounded-lg bg-white/5 text-slate-200 font-mono text-xs">
+              View on GitHub (â˜… 48.2k)
+            </a>
+            <a href="#sponsor" class="py-2.5 text-center rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-mono text-xs font-bold">
+              Sponsor Foundation
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow">
+
+      <!-- ================= HERO SECTION ================= -->
+      <section class="relative pt-16 sm:pt-24 pb-20 sm:pb-32 overflow-hidden bg-grid-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-4xl mx-auto">
+            
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-8 shadow-inner">
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              <span>VNPVP Interactive Corporation â€¢ 501(c)(3) Non-Profit</span>
+              <span class="text-slate-500">|</span>
+              <span class="text-slate-300 font-medium">100% Free & Open Core</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] sm:leading-[1.15] mb-6">
+              Precision Developer Tools for the
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">
+                Global Commons.
+              </span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed mb-10">
+              We build lightning-fast, zero-telemetry, developer-first command-line engines, local mockers, and static analyzers. No venture capital strings. No paywalls. No proprietary lock-in.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+              <a href="#playground" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all flex items-center gap-2 group">
+                <svg class="w-5 h-5 text-cyan-200 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>Try Live Playground</span>
+              </a>
+
+              <a href="#tools" class="px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 font-semibold border border-white/10 hover:border-cyan-500/40 transition-all flex items-center gap-2">
+                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+                <span>Explore Toolchain</span>
+              </a>
+
+              <a href="https://github.com/kimthi113114" target="_blank" class="px-6 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 font-semibold border border-white/5 hover:border-white/20 transition-all flex items-center gap-2">
+                <svg class="w-5 h-5 fill-current text-slate-400" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                </svg>
+                <span>GitHub Org</span>
+              </a>
+            </div>
+
+            <!-- Interactive Terminal Showcase -->
+            <div class="glow-border-box max-w-3xl mx-auto shadow-2xl overflow-hidden text-left">
+              <div class="bg-[#0b101d] rounded-2xl p-5 border border-white/10">
+                
+                <!-- Terminal Header Bar -->
+                <div class="flex flex-wrap items-center justify-between pb-3 mb-3 border-b border-white/5 gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
+                    <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+                    <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+                    <span class="ml-2 text-xs font-mono text-slate-400">vnpvp-forge-terminal â€” v2.4.0</span>
+                  </div>
+
+                  <!-- Install Command Tabs -->
+                  <div class="flex items-center gap-1 bg-black/40 p-1 rounded-lg border border-white/5 text-[11px] font-mono">
+                    <button class="term-tab px-2.5 py-1 rounded bg-white/10 text-cyan-400 border border-cyan-400" data-cmd="curl">cURL</button>
+                    <button class="term-tab px-2.5 py-1 rounded text-slate-400 border border-transparent hover:text-white" data-cmd="npm">npm</button>
+                    <button class="term-tab px-2.5 py-1 rounded text-slate-400 border border-transparent hover:text-white" data-cmd="cargo">cargo</button>
+                    <button class="term-tab px-2.5 py-1 rounded text-slate-400 border border-transparent hover:text-white" data-cmd="brew">brew</button>
+                    <button class="term-tab px-2.5 py-1 rounded text-slate-400 border border-transparent hover:text-white" data-cmd="docker">docker</button>
+                  </div>
+                </div>
+
+                <!-- Terminal Execution Body -->
+                <div class="font-mono text-xs sm:text-sm text-slate-300 py-2 flex items-center justify-between gap-4">
+                  <div class="flex items-center gap-3 overflow-x-auto py-1">
+                    <span class="text-cyan-400 font-bold select-none">&lambda;</span>
+                    <span id="terminal-command" class="text-cyan-200 select-all font-semibold">curl -fsSL https://openforge.vnpvp.org/install.sh | bash</span>
+                  </div>
+                  <button id="terminal-copy-btn" class="shrink-0 p-2 rounded-lg bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white transition-colors" title="Copy to clipboard">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Simulated Output -->
+                <div class="mt-3 pt-3 border-t border-white/5 font-mono text-[11px] sm:text-xs text-slate-400 leading-relaxed space-y-1">
+                  <p class="text-emerald-400">[INFO] Installing VNPVP OpenForge Toolchain (x86_64-windows / universal)...</p>
+                  <p class="text-slate-400">&check; Checked checksums: SHA256 (e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855)</p>
+                  <p class="text-slate-400">&check; Binary verified: Zero tracking telemetry discovered.</p>
+                  <p class="text-cyan-300">&gt; Successfully linked: <code class="text-white">vnpvp-forge</code>, <code class="text-white">mock-edge</code>, <code class="text-white">pulse-ast</code></p>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= STATS & TRUST METRICS ================= -->
+      <section id="stats-section" class="py-12 border-y border-white/5 bg-slate-950/60 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            
+            <div class="p-4">
+              <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-mono">
+                <span class="counter-val" data-target="100" data-suffix="%">100%</span>
+              </div>
+              <p class="text-xs sm:text-sm font-medium text-slate-400 mt-1 uppercase tracking-wider font-mono">Open Source (MIT)</p>
+            </div>
+
+            <div class="p-4">
+              <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-mono">
+                <span class="counter-val" data-target="0" data-suffix="B">0B</span>
+              </div>
+              <p class="text-xs sm:text-sm font-medium text-slate-400 mt-1 uppercase tracking-wider font-mono">Telemetry Collected</p>
+            </div>
+
+            <div class="p-4">
+              <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 font-mono">
+                <span class="counter-val" data-target="48200" data-suffix="+">48k+</span>
+              </div>
+              <p class="text-xs sm:text-sm font-medium text-slate-400 mt-1 uppercase tracking-wider font-mono">Community Stars</p>
+            </div>
+
+            <div class="p-4">
+              <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 font-mono">
+                <span class="counter-val" data-target="12500000" data-suffix="+">12.5M+</span>
+              </div>
+              <p class="text-xs sm:text-sm font-medium text-slate-400 mt-1 uppercase tracking-wider font-mono">Total CLI Downloads</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= NON-PROFIT MANIFESTO & MISSION ================= -->
+      <section id="mission" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="max-w-3xl mb-16">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/40 px-3 py-1 rounded-md border border-cyan-500/20">
+              Our Non-Profit Charter
+            </span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-4 mb-6">
+              Why VNPVP Interactive Corporation Exists
+            </h2>
+            <p class="text-base sm:text-lg text-slate-300 leading-relaxed">
+              Software infrastructure shouldn't be held hostage by venture capital monetizations, bloated paywalls, and intrusive surveillance telemetry. We operate as a recognized non-profit entity ensuring tooling remains free, unbiased, and universally accessible for all human creators.
+            </p>
+          </div>
+
+          <!-- 4 Pillars Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Pillar 1 -->
+            <div class="glass-card spotlight-card p-6 sm:p-8 rounded-2xl border border-white/5 relative group">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-3">Zero Paywalls</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Every release is 100% free under permissive MIT & Apache 2.0 licenses. No tier-locking, no seat-based pricing, and no enterprise bait-and-switch.
+              </p>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="glass-card spotlight-card p-6 sm:p-8 rounded-2xl border border-white/5 relative group">
+              <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-3">Zero Telemetry</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Your code and environment variables belong solely to you. Our tools run local-first, offline-capable, and produce strictly zero outbound analytics calls.
+              </p>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="glass-card spotlight-card p-6 sm:p-8 rounded-2xl border border-white/5 relative group">
+              <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-3">Democratic RFCs</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Roadmaps are decided openly by the community through RFC discussions and consensus. Anyone can propose, review, and shape future capabilities.
+              </p>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="glass-card spotlight-card p-6 sm:p-8 rounded-2xl border border-white/5 relative group">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-3">Maintainer Grants</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                100% of donations and community sponsorships are funneled into developer grants, free hosting mirrors, and stipends for open-source maintainers.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= DEVELOPER TOOLCHAIN SUITE ================= -->
+      <section id="tools" class="py-24 bg-slate-950/40 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-20">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400 bg-indigo-950/40 px-3 py-1 rounded-md border border-indigo-500/20">
+              VNPVP Open Core Arsenal
+            </span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-4 mb-6">
+              Modern Tooling Built for Peak Velocity
+            </h2>
+            <p class="text-slate-300 text-base sm:text-lg">
+              Engineered with Rust, Go, and TypeScript. Zero bloat, instant startup times, and seamless interoperability.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Tool 1: ForgeCLI -->
+            <div class="glass-card spotlight-card p-8 rounded-2xl border border-white/10 flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                  </div>
+                  <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800">Rust Core</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">ForgeCLI</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                  Ultra-fast project scaffolding and monorepo build runner. Computes deterministic dependency graphs 15x faster than legacy task runners.
+                </p>
+              </div>
+              <div class="bg-black/50 p-3 rounded-xl border border-white/5 font-mono text-xs flex items-center justify-between text-cyan-200">
+                <span>$ forge build --monorepo</span>
+                <button class="text-slate-400 hover:text-white" data-copy="forge build --monorepo" title="Copy">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Tool 2: MockEdge -->
+            <div class="glass-card spotlight-card p-8 rounded-2xl border border-white/10 flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                  </div>
+                  <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800">Edge Native</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">MockEdge</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                  Zero-latency local mock server with dynamic latency jitter simulation, OpenAPI 3.1 validation, and GraphQL resolver mocking.
+                </p>
+              </div>
+              <div class="bg-black/50 p-3 rounded-xl border border-white/5 font-mono text-xs flex items-center justify-between text-indigo-200">
+                <span>$ mock-edge --spec api.yaml</span>
+                <button class="text-slate-400 hover:text-white" data-copy="mock-edge --spec api.yaml" title="Copy">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Tool 3: PulseAST -->
+            <div class="glass-card spotlight-card p-8 rounded-2xl border border-white/10 flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                  </div>
+                  <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-purple-950 text-purple-300 border border-purple-800">AST Engine</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">PulseAST</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                  Real-time cognitive code complexity auditor. Detects architectural drift, circular dependencies, and security leaks before committing.
+                </p>
+              </div>
+              <div class="bg-black/50 p-3 rounded-xl border border-white/5 font-mono text-xs flex items-center justify-between text-purple-200">
+                <span>$ pulse check ./src --strict</span>
+                <button class="text-slate-400 hover:text-white" data-copy="pulse check ./src --strict" title="Copy">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Tool 4: SchemaSync -->
+            <div class="glass-card spotlight-card p-8 rounded-2xl border border-white/10 flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+                    </svg>
+                  </div>
+                  <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-pink-950 text-pink-300 border border-pink-800">Multi-DB</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">SchemaSync</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                  Universal database schema diffing and zero-downtime migration generator. Emits end-to-end TypeScript interfaces automatically.
+                </p>
+              </div>
+              <div class="bg-black/50 p-3 rounded-xl border border-white/5 font-mono text-xs flex items-center justify-between text-pink-200">
+                <span>$ schema-sync diff pg:// dev://</span>
+                <button class="text-slate-400 hover:text-white" data-copy="schema-sync diff pg:// dev://" title="Copy">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Tool 5: TraceLens -->
+            <div class="glass-card spotlight-card p-8 rounded-2xl border border-white/10 flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                  </div>
+                  <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800">Local eBPF</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">TraceLens</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                  Local-first microservice packet inspector & distributed tracer. Debug gRPC, HTTP/3, and WebSockets without external SaaS forwarders.
+                </p>
+              </div>
+              <div class="bg-black/50 p-3 rounded-xl border border-white/5 font-mono text-xs flex items-center justify-between text-emerald-200">
+                <span>$ tracelens listen :8080</span>
+                <button class="text-slate-400 hover:text-white" data-copy="tracelens listen :8080" title="Copy">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Tool 6: HexagonDB -->
+            <div class="glass-card spotlight-card p-8 rounded-2xl border border-white/10 flex flex-col justify-between group">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                    </svg>
+                  </div>
+                  <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-amber-950 text-amber-300 border border-amber-800">Embedded</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">HexagonDB</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                  Zero-config embedded memory database designed for sub-millisecond integration testing. Discards automatically between test runs.
+                </p>
+              </div>
+              <div class="bg-black/50 p-3 rounded-xl border border-white/5 font-mono text-xs flex items-center justify-between text-amber-200">
+                <span>$ hexagon --ephemeral</span>
+                <button class="text-slate-400 hover:text-white" data-copy="hexagon --ephemeral" title="Copy">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= INTERACTIVE LIVE DEVELOPER PLAYGROUND ================= -->
+      <section id="playground" class="py-24 relative overflow-hidden bg-grid-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/40 px-3 py-1 rounded-md border border-cyan-500/20">
+              Live Offline In-Browser Utilities
+            </span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-4 mb-4">
+              Developer Playground
+            </h2>
+            <p class="text-slate-300 text-base sm:text-lg">
+              Test VNPVP client algorithms right now. 100% offline in your browserâ€”no network requests or telemetry.
+            </p>
+          </div>
+
+          <!-- Playground Box -->
+          <div class="glow-border-box max-w-5xl mx-auto shadow-2xl">
+            <div class="bg-[#0a0f1d] rounded-2xl border border-white/10 p-4 sm:p-8">
+              
+              <!-- Tab Bar Navigation -->
+              <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-6 border-b border-white/10 text-xs sm:text-sm font-mono">
+                <button class="playground-tab-btn px-4 py-2 rounded-lg font-semibold border-b-2 active text-cyan-400 border-cyan-400 bg-white/10 whitespace-nowrap" data-tab="tab-json">
+                  { } JSON &rarr; TypeScript
+                </button>
+                <button class="playground-tab-btn px-4 py-2 rounded-lg font-semibold border-b-2 text-slate-400 border-transparent hover:text-white whitespace-nowrap" data-tab="tab-jwt">
+                  &Xi; JWT Token Inspector
+                </button>
+                <button class="playground-tab-btn px-4 py-2 rounded-lg font-semibold border-b-2 text-slate-400 border-transparent hover:text-white whitespace-nowrap" data-tab="tab-hash">
+                  # Hash & UUID Generator
+                </button>
+                <button class="playground-tab-btn px-4 py-2 rounded-lg font-semibold border-b-2 text-slate-400 border-transparent hover:text-white whitespace-nowrap" data-tab="tab-regex">
+                  .* RegEx Matcher
+                </button>
+              </div>
+
+              <!-- PANEL 1: JSON to TypeScript -->
+              <div id="tab-json" class="playground-panel">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  
+                  <!-- Left: Input -->
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <label class="text-xs font-mono text-slate-400 font-semibold uppercase tracking-wider">Input JSON</label>
+                      <button id="json-convert-btn" class="text-xs font-mono text-cyan-400 hover:text-cyan-300">Format & Re-run</button>
+                    </div>
+                    <textarea id="json-input" rows="12" class="w-full bg-[#030712] border border-white/10 rounded-xl p-4 font-mono text-xs sm:text-sm text-cyan-200 focus:outline-none focus:border-cyan-500/50 resize-y" spellcheck="false">{
+  "name": "VNPVP OpenForge",
+  "version": "2.4.0",
+  "isNonProfit": true,
+  "metrics": {
+    "stars": 48200,
+    "downloads": 12500000
+  },
+  "tags": ["compiler", "cli", "open-source"]
+}</textarea>
+                  </div>
+
+                  <!-- Right: Output -->
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <label class="text-xs font-mono text-slate-400 font-semibold uppercase tracking-wider">Generated TypeScript Interface</label>
+                      <button id="copy-ts-btn" class="flex items-center gap-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <span>Copy Code</span>
+                      </button>
+                    </div>
+                    <pre class="w-full h-[278px] bg-[#030712] border border-white/10 rounded-xl p-4 font-mono text-xs sm:text-sm text-emerald-300 overflow-auto whitespace-pre"><code id="ts-output">// TypeScript output will appear here</code></pre>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- PANEL 2: JWT Decoder -->
+              <div id="tab-jwt" class="playground-panel hidden">
+                <div class="space-y-4">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <label class="text-xs font-mono text-slate-400 font-semibold uppercase">JSON Web Token (JWT)</label>
+                      <button id="jwt-sample-btn" class="text-xs font-mono text-indigo-400 hover:text-indigo-300">Insert Sample Token</button>
+                    </div>
+                    <textarea id="jwt-input" rows="3" class="w-full bg-[#030712] border border-white/10 rounded-xl p-3 font-mono text-xs text-slate-200 focus:outline-none focus:border-indigo-500/50" placeholder="Paste your eyJ... JWT token here"></textarea>
+                    <div id="jwt-status" class="text-xs font-mono mt-1 text-slate-400">Waiting for token input...</div>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div>
+                      <span class="text-xs font-mono text-slate-400 uppercase font-semibold block mb-1">Decoded Header</span>
+                      <pre class="bg-[#030712] border border-white/10 rounded-xl p-3 font-mono text-xs text-rose-300 h-40 overflow-auto"><code id="jwt-header-out">{}</code></pre>
+                    </div>
+                    <div>
+                      <span class="text-xs font-mono text-slate-400 uppercase font-semibold block mb-1">Decoded Payload Claims</span>
+                      <pre class="bg-[#030712] border border-white/10 rounded-xl p-3 font-mono text-xs text-purple-300 h-40 overflow-auto"><code id="jwt-payload-out">{}</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PANEL 3: Hash & UUID -->
+              <div id="tab-hash" class="playground-panel hidden">
+                <div class="space-y-6">
+                  
+                  <!-- UUID -->
+                  <div class="bg-[#030712] p-5 rounded-xl border border-white/10">
+                    <div class="flex items-center justify-between mb-3">
+                      <span class="text-xs font-mono text-cyan-400 font-bold uppercase">Cryptographic UUID v4 Generator</span>
+                      <button id="gen-uuid-btn" class="px-3 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 rounded-lg text-xs font-mono hover:bg-cyan-500/30">
+                        Generate New UUID
+                      </button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <input id="uuid-result" type="text" readonly class="w-full bg-black/60 border border-white/10 rounded-lg px-3 py-2 font-mono text-sm text-cyan-200 select-all focus:outline-none">
+                      <button id="copy-uuid-btn" class="shrink-0 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg font-mono text-xs font-semibold">Copy</button>
+                    </div>
+                  </div>
+
+                  <!-- SHA-256 -->
+                  <div class="bg-[#030712] p-5 rounded-xl border border-white/10">
+                    <span class="text-xs font-mono text-emerald-400 font-bold uppercase block mb-3">Client-Side WebCrypto SHA-256</span>
+                    <input id="hash-input" type="text" value="VNPVP Interactive Corporation" placeholder="Enter text to hash..." class="w-full bg-black/60 border border-white/10 rounded-lg px-3 py-2 font-mono text-xs text-white mb-3 focus:outline-none focus:border-emerald-500/50">
+                    
+                    <div class="flex items-center gap-3">
+                      <input id="sha256-result" type="text" readonly class="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 font-mono text-xs text-emerald-300 select-all focus:outline-none">
+                      <button id="copy-sha-btn" class="shrink-0 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg font-mono text-xs font-semibold">Copy</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- PANEL 4: RegEx Tester -->
+              <div id="tab-regex" class="playground-panel hidden">
+                <div class="space-y-4">
+                  <div class="grid grid-cols-3 gap-3">
+                    <div class="col-span-2">
+                      <label class="text-xs font-mono text-slate-400 uppercase font-semibold block mb-1">RegEx Pattern</label>
+                      <input id="regex-pattern" type="text" value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" class="w-full bg-[#030712] border border-white/10 rounded-lg px-3 py-2 font-mono text-xs text-cyan-300 focus:outline-none focus:border-cyan-500/50">
+                    </div>
+                    <div>
+                      <label class="text-xs font-mono text-slate-400 uppercase font-semibold block mb-1">Flags</label>
+                      <input id="regex-flags" type="text" value="gi" class="w-full bg-[#030712] border border-white/10 rounded-lg px-3 py-2 font-mono text-xs text-cyan-300 focus:outline-none focus:border-cyan-500/50">
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex items-center justify-between mb-1">
+                      <label class="text-xs font-mono text-slate-400 uppercase font-semibold">Test Corpus</label>
+                      <span id="regex-count" class="text-xs font-mono text-emerald-400">Evaluating...</span>
+                    </div>
+                    <textarea id="regex-test-text" rows="3" class="w-full bg-[#030712] border border-white/10 rounded-lg p-3 font-mono text-xs text-slate-200 focus:outline-none">Contact our team at contact@vnpvp.org or maintainers@openforge.vnpvp.org for non-profit inquiries.</textarea>
+                  </div>
+
+                  <div>
+                    <label class="text-xs font-mono text-slate-400 uppercase font-semibold block mb-1">Match Highlighter</label>
+                    <div id="regex-match-result" class="bg-[#030712] border border-white/10 rounded-lg p-3 font-mono text-xs text-slate-300 min-h-[50px] leading-relaxed whitespace-pre-wrap"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= ARCHITECTURE & WORKFLOW SECTION ================= -->
+      <section id="architecture" class="py-24 bg-slate-950/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-pink-400 bg-pink-950/40 px-3 py-1 rounded-md border border-pink-500/20">
+              Unified Ecosystem Topology
+            </span>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-4 mb-4">
+              How the VNPVP Pipeline Connects
+            </h2>
+            <p class="text-slate-300 text-base sm:text-lg">
+              Every tool works independently or snaps together into an orchestrated, zero-friction developer workflow.
+            </p>
+          </div>
+
+          <!-- Flowchart Graphic / Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+            
+            <!-- Step 1 -->
+            <div class="glass-card p-6 rounded-2xl border border-white/10 text-center relative">
+              <div class="w-10 h-10 mx-auto rounded-full bg-cyan-500/20 text-cyan-300 font-mono font-bold flex items-center justify-center mb-4 border border-cyan-500/40">
+                01
+              </div>
+              <h4 class="text-lg font-bold text-white mb-2">Code & Scaffold</h4>
+              <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                Initialize repositories instantly with <span class="text-cyan-300 font-mono">ForgeCLI</span> templates. Zero boilerplates, multi-target ready.
+              </p>
+              <span class="inline-block px-2.5 py-1 text-[11px] font-mono bg-cyan-950/80 text-cyan-300 rounded border border-cyan-800">Local Workstation</span>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="glass-card p-6 rounded-2xl border border-white/10 text-center relative">
+              <div class="w-10 h-10 mx-auto rounded-full bg-indigo-500/20 text-indigo-300 font-mono font-bold flex items-center justify-center mb-4 border border-indigo-500/40">
+                02
+              </div>
+              <h4 class="text-lg font-bold text-white mb-2">Static Analysis</h4>
+              <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                Run <span class="text-indigo-300 font-mono">PulseAST</span> pre-commit hooks to verify complexity boundaries & zero-dependency leakage.
+              </p>
+              <span class="inline-block px-2.5 py-1 text-[11px] font-mono bg-indigo-950/80 text-indigo-300 rounded border border-indigo-800">AST Validation</span>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="glass-card p-6 rounded-2xl border border-white/10 text-center relative">
+              <div class="w-10 h-10 mx-auto rounded-full bg-purple-500/20 text-purple-300 font-mono font-bold flex items-center justify-center mb-4 border border-purple-500/40">
+                03
+              </div>
+              <h4 class="text-lg font-bold text-white mb-2">Edge Simulation</h4>
+              <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                Spin up <span class="text-purple-300 font-mono">MockEdge</span> & <span class="text-purple-300 font-mono">HexagonDB</span> for lightning-fast sub-millisecond test suites.
+              </p>
+              <span class="inline-block px-2.5 py-1 text-[11px] font-mono bg-purple-950/80 text-purple-300 rounded border border-purple-800">Isolated Testing</span>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="glass-card p-6 rounded-2xl border border-white/10 text-center relative">
+              <div class="w-10 h-10 mx-auto rounded-full bg-emerald-500/20 text-emerald-300 font-mono font-bold flex items-center justify-center mb-4 border border-emerald-500/40">
+                04
+              </div>
+              <h4 class="text-lg font-bold text-white mb-2">Deploy & Trace</h4>
+              <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                Trace distributed packets with <span class="text-emerald-300 font-mono">TraceLens</span> in production or preview environments without telemetry debt.
+              </p>
+              <span class="inline-block px-2.5 py-1 text-[11px] font-mono bg-emerald-950/80 text-emerald-300 rounded border border-emerald-800">Zero Telemetry CI</span>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= COMPARISON TABLE ================= -->
+      <section class="py-24 border-t border-white/5">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+              VNPVP Open Core vs. Commercial Alternatives
+            </h2>
+            <p class="text-slate-400 text-sm sm:text-base">
+              Why independent developers and forward-looking teams choose our non-profit stack.
+            </p>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="border-b border-white/10 text-slate-400 font-mono">
+                  <th class="py-4 px-4 font-semibold">Evaluation Criteria</th>
+                  <th class="py-4 px-4 font-bold text-cyan-400 bg-cyan-950/30 rounded-t-xl">VNPVP OpenForge</th>
+                  <th class="py-4 px-4 font-semibold text-slate-400">Proprietary SaaS Tooling</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5 text-slate-300">
+                <tr>
+                  <td class="py-4 px-4 font-medium text-white">License & Ownership</td>
+                  <td class="py-4 px-4 bg-cyan-950/20 text-emerald-300 font-semibold font-mono">&check; 100% MIT / Apache 2.0</td>
+                  <td class="py-4 px-4 text-slate-400">&cross; Closed-source / BSL Lock-in</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-medium text-white">Surveillance Telemetry</td>
+                  <td class="py-4 px-4 bg-cyan-950/20 text-emerald-300 font-semibold font-mono">&check; Exactly 0 Bytes (Air-gapped)</td>
+                  <td class="py-4 px-4 text-slate-400">&cross; Mandatory usage analytics & tracking</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-medium text-white">Pricing & Seats</td>
+                  <td class="py-4 px-4 bg-cyan-950/20 text-emerald-300 font-semibold font-mono">&check; $0 Forever (Non-Profit)</td>
+                  <td class="py-4 px-4 text-slate-400">&cross; $20 - $99 / seat / month</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-medium text-white">Offline Capability</td>
+                  <td class="py-4 px-4 bg-cyan-950/20 text-emerald-300 font-semibold font-mono">&check; 100% Local-first</td>
+                  <td class="py-4 px-4 text-slate-400">&cross; Requires active cloud ping</td>
+                </tr>
+                <tr>
+                  <td class="py-4 px-4 font-medium text-white">Community Governance</td>
+                  <td class="py-4 px-4 bg-cyan-950/20 text-emerald-300 font-semibold font-mono">&check; Democratic Open RFCs</td>
+                  <td class="py-4 px-4 text-slate-400">&cross; Closed corporate board</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= FINANCIAL TRANSPARENCY & SPONSORSHIP ================= -->
+      <section id="transparency" class="py-24 bg-slate-950/60 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <div>
+              <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/40 px-3 py-1 rounded-md border border-emerald-500/20">
+                Financial Transparency Ledger
+              </span>
+              <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-4 mb-6">
+                100% of Funds Invested Back into Developers
+              </h2>
+              <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-6">
+                As a non-profit corporation, VNPVP Interactive Corporation publishes its quarterly ledger openly. We do not generate executive dividends or shareholder payouts. Every dollar donated directly funds core maintainers and global CDN mirrors.
+              </p>
+
+              <!-- Budget Breakdown Bars -->
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between text-xs font-mono mb-1">
+                    <span class="text-slate-300">Open-Source Maintainer Fellowships & Grants</span>
+                    <span class="text-cyan-400 font-bold">60%</span>
+                  </div>
+                  <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden">
+                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 h-full rounded-full" style="width: 60%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs font-mono mb-1">
+                    <span class="text-slate-300">High-Speed CDN Mirrors & CI Build Farms</span>
+                    <span class="text-indigo-400 font-bold">25%</span>
+                  </div>
+                  <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden">
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full" style="width: 25%"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-xs font-mono mb-1">
+                    <span class="text-slate-300">Educational Workshops & Student Mentorship</span>
+                    <span class="text-purple-400 font-bold">15%</span>
+                  </div>
+                  <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden">
+                    <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full" style="width: 15%"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Sponsor Card -->
+            <div id="sponsor" class="glass-card p-8 sm:p-10 rounded-3xl border border-white/10 relative">
+              <h3 class="text-2xl font-bold text-white mb-3">Support the Non-Profit Foundation</h3>
+              <p class="text-slate-400 text-sm mb-8 leading-relaxed">
+                Whether you are an individual developer or an enterprise using our tools in your workflow, your tax-deductible sponsorship helps keep our toolchain free for everyone forever.
+              </p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                <div class="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/40 transition-colors">
+                  <div class="text-lg font-bold text-white mb-1">Individual Backer</div>
+                  <div class="text-2xl font-mono font-extrabold text-cyan-400 mb-2">$5 <span class="text-xs text-slate-400 font-normal">/ month</span></div>
+                  <p class="text-xs text-slate-400">Listed on our GitHub README & community Hall of Fame.</p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-indigo-500/40 transition-colors">
+                  <div class="text-lg font-bold text-white mb-1">Organizational Ally</div>
+                  <div class="text-2xl font-mono font-extrabold text-indigo-400 mb-2">$250 <span class="text-xs text-slate-400 font-normal">/ month</span></div>
+                  <p class="text-xs text-slate-400">Logo featured on landing page + direct advisory board seat.</p>
+                </div>
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-3">
+                <a href="https://github.com/sponsors/kimthi113114" target="_blank" class="flex-1 py-3 text-center rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-mono text-xs font-bold shadow-lg shadow-cyan-500/20">
+                  GitHub Sponsors &rarr;
+                </a>
+                <a href="mailto:sponsor@vnpvp.org" class="flex-1 py-3 text-center rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 font-mono text-xs font-semibold">
+                  Corporate Inquiries
+                </a>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= FAQ SECTION ================= -->
+      <section id="faq" class="py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center mb-16">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/40 px-3 py-1 rounded-md border border-cyan-500/20">
+              Frequently Asked Questions
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-4">
+              Everything You Need to Know
+            </h2>
+          </div>
+
+          <div class="space-y-4">
+            
+            <!-- Item 1 -->
+            <div class="faq-item glass-card rounded-2xl border border-white/10 overflow-hidden">
+              <button class="faq-header w-full p-6 text-left flex items-center justify-between text-base sm:text-lg font-semibold text-white">
+                <span>Is VNPVP Interactive Corporation truly a non-profit organization?</span>
+                <svg class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div class="faq-content px-6 pb-6 text-sm text-slate-400 leading-relaxed hidden border-t border-white/5 pt-4">
+                Yes. VNPVP Interactive Corporation is chartered as a dedicated non-profit technology foundation. We have no external shareholders, no equity holders, and no venture capital investors demanding hyper-growth or sudden paywall enforcement.
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="faq-item glass-card rounded-2xl border border-white/10 overflow-hidden">
+              <button class="faq-header w-full p-6 text-left flex items-center justify-between text-base sm:text-lg font-semibold text-white">
+                <span>Can I use VNPVP developer tools in my commercial proprietary products?</span>
+                <svg class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div class="faq-content px-6 pb-6 text-sm text-slate-400 leading-relaxed hidden border-t border-white/5 pt-4">
+                Absolutely. All our official tools and libraries are published under permissive open-source licenses (MIT and Apache 2.0). You are freely permitted to use, modify, embed, and deploy them in personal, educational, or large-scale commercial company projects without royalties.
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="faq-item glass-card rounded-2xl border border-white/10 overflow-hidden">
+              <button class="faq-header w-full p-6 text-left flex items-center justify-between text-base sm:text-lg font-semibold text-white">
+                <span>How can I contribute code or become a core maintainer?</span>
+                <svg class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div class="faq-content px-6 pb-6 text-sm text-slate-400 leading-relaxed hidden border-t border-white/5 pt-4">
+                Check out our repositories on GitHub. We maintain a clear "good first issue" tag across ForgeCLI, MockEdge, and PulseAST. Submit a Pull Request following our RFC guidelines, and active contributors are invited into our compensated maintainer fellowship program.
+              </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="faq-item glass-card rounded-2xl border border-white/10 overflow-hidden">
+              <button class="faq-header w-full p-6 text-left flex items-center justify-between text-base sm:text-lg font-semibold text-white">
+                <span>Does the software phone home or upload diagnostic telemetry?</span>
+                <svg class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </button>
+              <div class="faq-content px-6 pb-6 text-sm text-slate-400 leading-relaxed hidden border-t border-white/5 pt-4">
+                No. Never. We hold a strict zero-telemetry charter. Our binary builds run completely air-gapped without hidden beacon pings or analytics beacons.
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= CTA BANNER ================= -->
+      <section class="py-20 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="glow-border-box rounded-3xl p-8 sm:p-14 text-center bg-gradient-to-b from-[#0b1222] to-[#040814] relative">
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-6 tracking-tight">
+              Ready to Accelerate Your Workflow?
+            </h2>
+            <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto mb-8">
+              Join tens of thousands of developers writing better code with VNPVP OpenForge. Install in 3 seconds, configure in 0, and build with freedom.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+              <a href="#playground" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold shadow-xl shadow-cyan-500/25 transition-all font-mono text-sm">
+                Open In-Browser Playground &rarr;
+              </a>
+              <a href="https://github.com/kimthi113114" target="_blank" class="px-8 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold border border-white/10 transition-all font-mono text-sm">
+                Star on GitHub â˜…
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="border-t border-white/5 bg-[#02050c] pt-16 pb-12 text-slate-400 text-xs sm:text-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+          
+          <!-- Col 1: Brand Info -->
+          <div class="md:col-span-1 space-y-4">
+            <div class="flex items-center gap-3">
+              <img src="assets/images/logo.svg" alt="VNPVP Logo" class="w-8 h-8">
+              <span class="font-extrabold text-base text-white tracking-tight">VNPVP Interactive</span>
+            </div>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              VNPVP Interactive Corporation is an independent, non-profit open-source foundation dedicated to building community-owned developer tooling and infrastructure.
+            </p>
+            <p class="font-mono text-[11px] text-cyan-400">
+              501(c)(3) Non-Profit Organization
+            </p>
+          </div>
+
+          <!-- Col 2: Open Toolchain -->
+          <div>
+            <h4 class="font-bold text-white font-mono text-xs uppercase tracking-wider mb-4">Toolchain</h4>
+            <ul class="space-y-2.5 text-xs">
+              <li><a href="#tools" class="hover:text-cyan-400 transition-colors">ForgeCLI (Build Runner)</a></li>
+              <li><a href="#tools" class="hover:text-cyan-400 transition-colors">MockEdge (API Mocking)</a></li>
+              <li><a href="#tools" class="hover:text-cyan-400 transition-colors">PulseAST (Diagnostic Engine)</a></li>
+              <li><a href="#tools" class="hover:text-cyan-400 transition-colors">SchemaSync (Multi-DB Diff)</a></li>
+              <li><a href="#tools" class="hover:text-cyan-400 transition-colors">TraceLens (eBPF Tracer)</a></li>
+              <li><a href="#tools" class="hover:text-cyan-400 transition-colors">HexagonDB (Embedded DB)</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Foundation -->
+          <div>
+            <h4 class="font-bold text-white font-mono text-xs uppercase tracking-wider mb-4">Foundation</h4>
+            <ul class="space-y-2.5 text-xs">
+              <li><a href="#mission" class="hover:text-cyan-400 transition-colors">Non-Profit Charter</a></li>
+              <li><a href="#transparency" class="hover:text-cyan-400 transition-colors">Financial Ledger</a></li>
+              <li><a href="#sponsor" class="hover:text-cyan-400 transition-colors">Maintainer Grants</a></li>
+              <li><a href="https://github.com/kimthi113114" target="_blank" class="hover:text-cyan-400 transition-colors">Code of Conduct</a></li>
+              <li><a href="https://github.com/kimthi113114" target="_blank" class="hover:text-cyan-400 transition-colors">RFC Governance</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 4: Community & Links -->
+          <div>
+            <h4 class="font-bold text-white font-mono text-xs uppercase tracking-wider mb-4">Connect</h4>
+            <ul class="space-y-2.5 text-xs">
+              <li><a href="https://github.com/kimthi113114" target="_blank" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5"><span>GitHub Repository</span></a></li>
+              <li><a href="#playground" class="hover:text-cyan-400 transition-colors">Web Playground</a></li>
+              <li><a href="mailto:contact@vnpvp.org" class="hover:text-cyan-400 transition-colors">contact@vnpvp.org</a></li>
+              <li><a href="#sponsor" class="hover:text-cyan-400 transition-colors text-cyan-300 font-semibold">Sponsor on GitHub</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+          <div>
+            &copy; 2026 VNPVP Interactive Corporation. Released under the <span class="text-white font-mono">MIT / Apache 2.0</span> License.
+          </div>
+          <div class="flex items-center gap-6">
+            <span class="inline-flex items-center gap-1.5 text-slate-400">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              All Systems Operational
+            </span>
+            <a href="#" class="hover:text-white transition-colors">Privacy Charter</a>
+            <a href="#" class="hover:text-white transition-colors">Security</a>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/playground.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
+
